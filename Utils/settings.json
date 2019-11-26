@@ -1,0 +1,351 @@
+{
+    "templatesDir": "templates",
+    "resolution": [
+        1920,
+        1080
+    ],
+    "stateFindingResources": {
+        "clientCommon": {
+            "coin": {
+                "box": {
+                    "top": 22,
+                    "left": 1240,
+                    "width": 196,
+                    "height": 34
+                },
+                "template": ""
+            },
+            "logo": {
+                "box": {
+                    "top": 0,
+                    "left": 0,
+                    "width": 63,
+                    "height": 73
+                },
+                "template": ""
+            },
+            "gem": {
+                "box": {
+                    "top": 27,
+                    "left": 1575,
+                    "width": 77,
+                    "height": 26
+                },
+                "template": ""
+            }
+        },
+        "lobby": {
+            "hero": {
+                "box": {
+                    "top": 70,
+                    "left": 890,
+                    "width": 125,
+                    "height": 160
+                },
+                "template": ""
+            },
+            "readyTL": {
+                "box": {
+                    "top": 970,
+                    "left": 790,
+                    "width": 65,
+                    "height": 35
+                },
+                "template": ""
+            },
+            "readyTR": {
+                "box": {
+                    "top": 975,
+                    "left": 1060,
+                    "width": 90,
+                    "height": 40
+                },
+                "template": ""
+            },
+            "readyBR": {
+                "box": {
+                    "top": 1020,
+                    "left": 1035,
+                    "width": 105,
+                    "height": 25
+                },
+                "template": ""
+            },
+            "readyBL": {
+                "box": {
+                    "top": 1020,
+                    "left": 780,
+                    "width": 100,
+                    "height": 35
+                },
+                "template": ""
+            }
+        },
+        "searching": {
+            "BR": {
+                "box": {
+                    "top": 1025,
+                    "left": 1050,
+                    "width": 20,
+                    "height": 20
+                },
+                "template": ""
+            },
+            "TL": {
+                "box": {
+                    "top": 990,
+                    "left": 835,
+                    "width": 20,
+                    "height": 20
+                },
+                "template": ""
+            }
+        },
+        "thanks": {
+            "question": {
+                "box": {
+                    "top": 825,
+                    "left": 940,
+                    "width": 35,
+                    "height": 40
+                },
+                "template": ""
+            },
+            "btnTL": {
+                "box": {
+                    "top": 893,
+                    "left": 843,
+                    "width": 20,
+                    "height": 20
+                },
+                "template": ""
+            },
+            "btnBR": {
+                "box": {
+                    "top": 943,
+                    "left": 1057,
+                    "width": 20,
+                    "height": 20
+                },
+                "template": ""
+            }
+        },
+        "rejoin":{
+            "btnOneTL":{
+                "box": {
+                    "top": 598,
+                    "left": 762,
+                    "width": 20,
+                    "height": 20
+                },
+                "template": ""
+            },
+            "btnOneBR":{
+                "box": {
+                    "top": 630,
+                    "left": 940,
+                    "width": 20,
+                    "height": 20
+                },
+                "template": ""
+            },
+            "btnTwoTL":{
+                "box": {
+                    "top": 598,
+                    "left": 960,
+                    "width": 20,
+                    "height": 20
+                },
+                "template": ""
+            },
+            "btnTwoBR":{
+                "box": {
+                    "top": 630,
+                    "left": 1137,
+                    "width": 20,
+                    "height": 20
+                },
+                "template": ""
+            }
+        },
+        "leave": {
+            "btnOne": {
+                "box": {
+                    "top": 975,
+                    "left": 40,
+                    "width": 30,
+                    "height": 30
+                },
+                "template": ""
+            },
+            "btnTwo": {
+                "box": {
+                    "top": 1020,
+                    "left": 480,
+                    "width": 30,
+                    "height": 30
+                },
+                "template": ""
+            }
+        },
+        "home":{
+            "ico":{
+               "box": {
+                    "top": 183,
+                    "left": 1835,
+                    "width": 15,
+                    "height": 20
+                },
+                "template": "" 
+            }
+        },
+        "mvp": {
+            "arrowB":{
+                "box": {
+                     "top": 840,
+                     "left": 925,
+                     "width": 70,
+                     "height": 60
+                 },
+                 "template": "" 
+             },
+             "arrowR":{
+                "box": {
+                     "top": 840,
+                     "left": 925,
+                     "width": 70,
+                     "height": 60
+                 },
+                 "template": "" 
+             }
+        },
+        "loading": {
+            "left": {
+                "top": 260,
+                "left": 105,
+                "width": 305,
+                "height": 40
+            },
+            "right": {
+                "top": 260,
+                "left": 1600,
+                "width": 210,
+                "height": 40
+            },
+            "color": [105,248,175]
+        },
+        "inGame": {
+            "exa": {
+                "box": {
+                    "top": 895,
+                    "left": 58,
+                    "width": 22,
+                    "height": 20
+                },
+                "template": ""
+            },
+            "exa1": {
+                "box": {
+                    "top": 986,
+                    "left": 784,
+                    "width": 12,
+                    "height": 11
+                },
+                "template": ""
+            },
+            "exa2": {
+                "box": {
+                    "top": 986,
+                    "left": 869,
+                    "width": 12,
+                    "height": 11
+                },
+                "template": ""
+            },
+            "exa3": {
+                "box": {
+                    "top": 986,
+                    "left": 955,
+                    "width": 12,
+                    "height": 11
+                },
+                "template": ""
+            },
+            "fountainOn": {
+                "box": {
+                    "top": 1030,
+                    "left": 185,
+                    "width": 30,
+                    "height": 33
+                },
+                "template": ""
+            },
+            "fountainOff": {
+                "box": {
+                    "top": 1033,
+                    "left": 208,
+                    "width": 30,
+                    "height": 11
+                },
+                "template": ""
+            },
+            "mountOn": {
+                "box": {
+                    "top": 1028,
+                    "left": 693,
+                    "width": 33,
+                    "height": 32
+                },
+                "template": ""
+            },
+            "mountOff": {
+                "box": {
+                    "top": 1028,
+                    "left": 693,
+                    "width": 33,
+                    "height": 32
+                },
+                "template": ""
+            }
+        }
+    },
+    "inGameResources":{
+        "hpBar":{
+            "box":{
+                "top":1008,
+                "left":210,
+                "width":192,
+                "height":2
+            },
+            "maskVerts":[
+                [206,1011],
+                [216,992],
+                [414,992],
+                [404,1011]
+            ],
+            "hpColor":[ 21 ,196 ,62 ],
+            "shieldColor":[236,243,240]
+        },
+
+        "map": {
+            "box": {
+                "top": 700,
+                "left": 1470,
+                "width": 430,
+                "height": 329
+            },
+            "colors": {
+                "blueLower": [150,80,20],
+                "blueUpper": [255,140,60],
+                "redLower": [20,0,128],
+                "redUpper":[128,8,255],
+                "greenLower":[0,90,0],
+                "greenUpper":[40,255,90],
+                "violetLower":[0,10,0],
+                "violetUpper":[255,40,255],
+                "yellowLower":[0,150,150],
+                "yellowUpper":[128,255,255]
+            }
+        }
+    }
+}
