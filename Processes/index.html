@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoTSPyBot</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+</head>
+<body>
+    <h1>IT WORKS!</h1>
+    <div>State</div>
+    <div id="stateDiv"></div>
+<script>
+    const stateDiv = document.getElementById('stateDiv')
+    const socket = io.connect("http://localhost:3000")
+    socket.on("state", (msg) => {
+        stateDiv.innerHTML = msg
+        console.info('State:',msg)
+        });
+    socket.on("gameState", (msg) => {
+        stateDiv.innerHTML = msg
+        console.info('gameState:',msg)
+        });
+    socket.on("side", (msg) => {
+        stateDiv.innerHTML = msg
+        console.info('Side:',msg)
+        });
+    socket.on('reply', (event,data) => {
+        console.log('universal handler',event,data)
+    })
+
+    socket.on('pong', (latency) => {
+        console.log('latency',latency)
+});
+</script>
+</body>
+</html>

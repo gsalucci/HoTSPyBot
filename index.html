@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>HoTSPyBot</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <style>
+        #conDiv {
+            width:100px;
+            height:100px;
+            border-radius:50%;
+            background-color:grey;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row m-0 my-2 justify-content-center">
+            <h1>HoTS Py Bot</h1>
+        </div>
+        <div class="row m-0 my-2">
+            <div class="col-md-3">
+                <div>State</div>
+                <div id="stateDiv"></div>
+            </div>
+            <div class="col-md-3">
+                <div>Side</div>
+                <div id="sideDiv"></div>
+            </div>
+            <div class="col-md-3">
+                <div>HP</div>
+                <div id="hpDiv"></div>
+            </div>
+            <div class="col-md-3">
+                <div>Hz</div>
+                <div id="freqDiv"></div>
+            </div>
+            <div id="conDiv"></div>
+        </div>
+    </div>
+</body>
+<script>
+    const stateDiv = document.getElementById('stateDiv')
+    const sideDiv = document.getElementById('sideDiv')
+    const hpDiv = document.getElementById('hpDiv')
+    const freqDiv = document.getElementById('freqDiv')
+    const conDiv = document.getElementById('conDiv')
+    const  wsOpts = {transports: ['websocket','polling']}
+    const socket = io.connect(undefined,wsOpts)
+    let lastDate = Date.now()
+    let freq = 0
+    lastMessages = {
+        state:undefined,
+        gameState: undefined,
+        side: undefined
+    }
+    let nmessage=0
+    socket.on("state", (msg) => {
+        nmessage++
+        if (msg !== lastMessages.state) {
+            conDiv.style['background-color'] = 'green'
+            freq = (1000 / (Date.now() - lastDate))
+            freqDiv.innerHTML = freq
+            stateDiv.innerHTML = msg.state
+            sideDiv.innerHTML = msg.side
+            hpDiv.innerHTML = msg.hp
+            lastDate = Date.now()
+            conDiv.style['background-color'] = 'yellow'
+            lastMessages.state = msg
+        }
+        console.info('State:',msg,freq,nmessage)
+        });
+    // socket.on("gameState", (msg) => {
+    //     if (msg !== lastMessages.gameState){
+    //         hpDiv.innerHTML = msg
+    //         lastMessages.gameState = msg
+    //     }
+    //     // console.info('gameState:',msg)
+    //     });
+    // socket.on("side", (msg) => {
+    //     if (msg !== lastMessages.side){
+    //         sideDiv.innerHTML = msg
+    //         lastMessages.side  = msg
+    //     }
+    //     // console.info('Side:',msg)
+    //     });
+    
+        socket.on('connect', () =>{
+            conDiv.style['background-color'] = 'green'
+        })
+        socket.on('disconnect', () =>{
+            conDiv.style['background-color'] = 'red'
+        })
+//     socket.on('reply', (event,data) => {
+//         console.log('universal handler',event,data)
+//     })
+
+    socket.on('pong', (latency) => {
+        console.log('latency',latency)
+        conDiv.innerHTML = latency
+    });
+</script>
+</body>
+</html>
