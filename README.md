@@ -25,6 +25,8 @@ It uses 2 types of matching, color matching and tempalte matching to determine t
 
 The short-term goal is to make it gather enough data to feed to the ML algorithm.
 
+websocket and webapp server needs a rabbitmq instance running on localhost:5672. you can checkout app state updating in real-time at http://localhost:3000
+
 Data that remains to be acquired:
 1. enemy and allied heroes position in the hero's FoV
 2. track enemy and friendly minions in the hero FoV

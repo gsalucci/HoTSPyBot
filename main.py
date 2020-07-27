@@ -2,6 +2,7 @@ import Utils.RuntimeHelpers.SettignsManager as settingsManager
 from Processes.ProcManager import ProcManager
 import Utils.RuntimeHelpers.Stopwatch as stopwatch
 import asyncio
+from aiohttp import web
 import socketio
 import threading
 import eventlet
@@ -9,10 +10,19 @@ from time import sleep
 static_files = {
     "/": {'filename': 'index.html', 'content_type': 'text/html'},
 }
-sio = socketio.Server(async_mode="eventlet")
-app = socketio.WSGIApp(sio, static_files={'/':'index.html'})
 
+async def index(request):
+    """Serve the client-side application."""
+    with open('index.html') as f:
+        return web.Response(text=f.read(), content_type='text/html')
 
+mgr = socketio.AsyncAioPikaManager('amqp://guest:guest@localhost:5672')
+sio = socketio.AsyncServer(client_manager=mgr)
+app = web.Application()
+sio.attach(app)
+app.router.add_static('/www', 'www')
+app.router.add_get('/', index)
+event_loop_a = asyncio.new_event_loop()
 ver = 0.1
 settings = None
 
@@ -32,9 +42,10 @@ def disconnect(sid):
 
 
 def serve_app():
-    eventlet.wsgi.server(eventlet.listen(('', 3000)), app)
+    asyncio.set_event_loop(event_loop_a)
+    web.run_app(app,host="0.0.0.0",port=3000)
 
-def main():
+async def main():
     print(f"Welcome to HoTSPyBot {ver}")
     settings = settingsManager.init()
     procManager = ProcManager(settings)
@@ -52,11 +63,10 @@ def main():
     i = 0
     while not procManager.sharedObjectsInstances["keyboard"].getAction() == "Stop":
         stopwatch.start()
-        # sio.emit('state', {"state":procManager.sharedObjectsInstances['state'].getState(),"side":procManager.sharedObjectsInstances['state'].getSide(),"hp":procManager.sharedObjectsInstances['gameState'].getGameStateValue('hp')})
+        await mgr.emit('state', {"state":procManager.sharedObjectsInstances['state'].getState(),"side":procManager.sharedObjectsInstances['state'].getSide(),"hp":procManager.sharedObjectsInstances['gameState'].getGameStateValue('hp')})
         # sio.emit('side', procManager.sharedObjectsInstances['state'].getSide())
         # sio.emit('gameState', procManager.sharedObjectsInstances['gameState'].getGameStateValue('hp'))
         i = i+1
-        sio.emit('state',{"state":f"dioCane: {i}"})
         # sleep(0.01)
         # log(f"[ Main ] {stopwatch.stop()}\t {procManager.sharedObjectsInstances['state'].getState()}\t{procManager.sharedObjectsInstances['state'].getSide()}\t{procManager.sharedObjectsInstances['gameState'].getGameStateValue('hp')}")
     
@@ -75,6 +85,7 @@ if __name__ == '__main__':
     wst.daemon = True
     wst.start()
 
+    asyncio.run(main())
 
-    main()
+    # main()
     # asyncio.run(web.run_app(app, host="0.0.0.0",port=3000))
