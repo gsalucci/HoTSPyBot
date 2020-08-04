@@ -13,6 +13,7 @@ class Log():
         else:
             print(f"{m}")
             self.messages.append(m)            
-    
+    def getLastMessage(self):
+        return self.messages[-1]
     def lastMessage(self):
         print(f"{self.messages[-1]}")

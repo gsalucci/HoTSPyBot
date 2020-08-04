@@ -1,46 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>HoTSPyBot</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <style>
         #conDiv {
-            width:100px;
-            height:100px;
-            border-radius:50%;
-            background-color:grey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: grey;
+            text-align: center;
+            color: white;
+        }
+        div#logDiv.logDiv{
+            max-height: 400px;
+            height: 400px;
+            width:100%;
+            overflow-y: auto;
+            overflow-x: auto;
+            display:flex;
+            flex-direction: column;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="row m-0 my-2 justify-content-center">
             <h1>HoTS Py Bot</h1>
         </div>
-        <div class="row m-0 my-2">
-            <div class="col-md-3">
-                <div>State</div>
+        <div class="row m-0 my-2 justify-content-between">
+            <div class="col-xs-4">
+                <div class="row m-0 align-items-center">
+                    <b class="mr-2">Connection: </b>
+                    <div id="conDiv"></div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="row m-0 align-items-center">
+                    <b class="mr-2">Connection speed</b>
+                    <div id="freqDiv"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-0 my-2 justify-content-between">
+            <div class="col-xs-2">
+                <div><b>State</b></div>
                 <div id="stateDiv"></div>
             </div>
-            <div class="col-md-3">
-                <div>Side</div>
+            <div class="col-xs-2">
+                <div><b>Side</b></div>
                 <div id="sideDiv"></div>
             </div>
-            <div class="col-md-3">
-                <div>HP</div>
+            <div class="col-xs-2">
+                <div><b>HP</b></div>
                 <div id="hpDiv"></div>
             </div>
-            <div class="col-md-3">
-                <div>Hz</div>
-                <div id="freqDiv"></div>
+            <div class="col-xs-2">
+                <div><b>MapFPS</b></div>
+                <div id="mapScanFpsDiv"></div>
             </div>
-            <div id="conDiv"></div>
+
+        </div>
+        <div class="row m-0 my-2">
+            <div class="col-xs-6">
+                <img id="finalImgDisp" style="width: 100%; height: auto;object-fit: contain;">
+                <!-- <canvas id="finalImgDisp" width="400" height="400"></canvas> -->
+                <div id="finalImgTitle"></div> 
+            </div>
+            <div class="col-xs-6">
+                <img id="summedImgDisp" style="width: 100%; height: auto;object-fit: contain;">
+                <!-- <canvas id="summedImgDisp" width="400" height="400"></canvas> -->
+                <div id="summedImgTitle"></div>
+            </div>
+        </div>
+        <div class="row m-0 my-2">
+            <div class="col-xs-12" style="width:100%">
+                <div class="row m-0">
+                    <b>Log</b>
+                </div>
+                <div id="logDiv" class="logDiv"></div>
+            </div>
+        </div>
+        <div class="row m-0 my-2">
+            <canvas id="mapCanvas" width="400" height="400"></canvas>
         </div>
     </div>
 </body>
@@ -50,31 +110,102 @@
     const hpDiv = document.getElementById('hpDiv')
     const freqDiv = document.getElementById('freqDiv')
     const conDiv = document.getElementById('conDiv')
-    const  wsOpts = {transports: ['websocket','polling']}
-    const socket = io.connect(undefined,wsOpts)
+    const logDiv = document.getElementById('logDiv')
+    const mapScanFpsDiv = document.getElementById('mapScanFpsDiv')
+    const latencyDiv = document.getElementById('latency')
+    const mapCanvasContext = document.getElementById('mapCanvas').getContext("2d")
+    mapCanvasContext.font = "24px serif"
+    let lastMsg = ""
+    let url = ""
+    let nMsg = 0
+    const maxMsg = 100
     let lastDate = Date.now()
-    let freq = 0
-    lastMessages = {
-        state:undefined,
-        gameState: undefined,
-        side: undefined
+    const imageEls = {
+        'final': { img: document.getElementById('finalImgDisp'), title: document.getElementById('finalImgTitle')},
+        'summed': { img: document.getElementById('summedImgDisp'), title: document.getElementById('summedImgTitle')}
     }
-    let nmessage=0
+
+    const wsOpts = { transports: ['websocket', 'polling'] }
+    const socket = io(undefined,wsOpts)
+
     socket.on("state", (msg) => {
-        nmessage++
-        if (msg !== lastMessages.state) {
-            conDiv.style['background-color'] = 'green'
-            freq = (1000 / (Date.now() - lastDate))
-            freqDiv.innerHTML = freq
-            stateDiv.innerHTML = msg.state
-            sideDiv.innerHTML = msg.side
-            hpDiv.innerHTML = msg.hp
-            lastDate = Date.now()
-            conDiv.style['background-color'] = 'yellow'
-            lastMessages.state = msg
+        freq = (1000 / (Date.now() - lastDate))
+        freqDiv.innerHTML = freq.toFixed(2) + ' HZ'
+        stateDiv.innerHTML = msg.state
+        sideDiv.innerHTML = msg.side
+        hpDiv.innerHTML = msg.gameState.hp
+        if (lastMsg !== '<div class="row m-0 my-1">'+msg.log+'</div>') {
+            lastMsg = '<div class="row m-0 my-1">'+msg.log+'</div>'
+            if (nMsg <= maxMsg) {
+                logDiv.innerHTML += lastMsg
+                nMsg++
+            } else {
+                logDiv.innerHTML = ""
+                logDiv.innerHTML += lastMsg
+                nMsg = 1
+            }
+            logDiv.scrollTop = logDiv.scrollHeight;
         }
-        console.info('State:',msg,freq,nmessage)
-        });
+        if (msg.images) {
+            msg.gameState.mapScanFPS? mapScanFpsDiv.innerHTML = msg.gameState.mapScanFPS.toFixed(2) : null
+            Object.keys(msg.images).forEach(k => {
+                // displayImage(msg.images[k], imageEls[k].img, imageEls[k].title, k)
+                displayImage(msg.images[k], imageEls[k].img, imageEls[k].title, k)
+            })
+
+        }
+        // console.log(msg.gameState)
+        if (msg.gameState.structures) {
+            mapCanvasContext.fillStyle = "blue"
+            const blue = msg.gameState.structures.blue
+            blue.forEach(b => {
+                mapCanvasContext.fillText(b.type.charAt(0).toUpperCase(), b.geom.center[0],b.geom.center[1])
+            })
+            mapCanvasContext.fillStyle = "red"
+            const red = msg.gameState.structures.red
+            red.forEach(r => {
+                mapCanvasContext.fillText(r.type.charAt(0).toUpperCase(), r.geom.center[0],r.geom.center[1])
+            })
+        }
+        lastDate = Date.now()
+    });
+
+    displayImage = (arrayBuffer, imgElement, titleElem, title = '') => {
+        const blob = new Blob([new Uint8Array(arrayBuffer)], { type: "image/jpeg" });
+        url = window.URL.createObjectURL(blob)
+        imgElement.src = url
+        titleElem.innerHTML = title
+        // window.URL.revokeObjectURL(url)
+    }
+
+    // displayImage = (arrayBuffer, imgElement, titleElem, title = '') => {
+    //     console.log(arrayBuffer)
+    //     // let imData = imgElement.getImageData(0,0,400,400) 
+    //     // imData.data.set(new Uint8ClampedArray(arrayBuffer,32))
+    //     // imgElement.putImageData(imData,0,0)
+    //     imgElement.drawImage(arrayBuffer,0,0)
+    //     titleElem.innerHTML = title
+    // }
+
+    // displayImage = (arrayBuffer, imgElement, titleElem, title = '') => {
+    //     const arrayBufferView = new Uint8Array(arrayBuffer);
+    //     const blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+    //     blobToBase64(blob).then(url => {
+    //         // console.log('Image URL: ', url, title)
+    //         imgElement.src = url
+    //     })
+    //     // titleElem.innerHTML = title
+    // }
+    // let blobToBase64 = function (blob) {
+    //     return new Promise(resolve => {
+    //         let reader = new FileReader();
+    //         reader.onload = function () {
+    //             let dataUrl = reader.result;
+    //             resolve(dataUrl);
+    //         };
+    //         reader.readAsDataURL(blob);
+    //     });
+    // }
     // socket.on("gameState", (msg) => {
     //     if (msg !== lastMessages.gameState){
     //         hpDiv.innerHTML = msg
@@ -89,21 +220,21 @@
     //     }
     //     // console.info('Side:',msg)
     //     });
-    
-        socket.on('connect', () =>{
-            conDiv.style['background-color'] = 'green'
-        })
-        socket.on('disconnect', () =>{
-            conDiv.style['background-color'] = 'red'
-        })
-//     socket.on('reply', (event,data) => {
-//         console.log('universal handler',event,data)
-//     })
+
+    socket.on('connect', () => {
+        conDiv.style['background-color'] = 'green'
+    })
+    socket.on('disconnect', () => {
+        conDiv.style['background-color'] = 'red'
+    })
+    //     socket.on('reply', (event,data) => {
+    //         console.log('universal handler',event,data)
+    //     })
 
     socket.on('pong', (latency) => {
-        console.log('latency',latency)
-        conDiv.innerHTML = latency
+        conDiv.innerHTML = latency + 'ms'
     });
 </script>
 </body>
+
 </html>

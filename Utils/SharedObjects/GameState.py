@@ -2,6 +2,7 @@ class GameState():
     def __init__(self):
         self.gameState = {}
         self.procRunning = False
+        self.mapImages = {}
     def getGameState(self):
         return self.gameState
     def getGameStateValue(self,k):
@@ -15,3 +16,9 @@ class GameState():
         self.procRunning = p
     def getProcRunning(self):
         return self.procRunning
+    def setMapImage(self, k, i):
+        self.mapImages[k] = i 
+    def getMapImage(self, k):
+        return self.mapImages[k]
+    def getMapImages(self):
+        return self.mapImages
