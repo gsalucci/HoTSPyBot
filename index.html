@@ -120,9 +120,19 @@
     let nMsg = 0
     const maxMsg = 100
     let lastDate = Date.now()
+    const readerFinal = new FileReader();
+    const readerSummed = new FileReader();
     const imageEls = {
         'final': { img: document.getElementById('finalImgDisp'), title: document.getElementById('finalImgTitle')},
         'summed': { img: document.getElementById('summedImgDisp'), title: document.getElementById('summedImgTitle')}
+    }
+    readerFinal.onloadend = () => {
+            const base64data = reader.result;                
+            imageEls.final.img.src = base64data
+    }
+    readerSummed.onloadend = () => {
+            const base64data = reader.result;                
+            imageEls.summed.img.src = base64data
     }
 
     const wsOpts = { transports: ['websocket', 'polling'] }
@@ -170,10 +180,10 @@
         lastDate = Date.now()
     });
 
-    displayImage = (arrayBuffer, imgElement, titleElem, title = '') => {
+    displayImage = (arrayBuffer, imgElement, titleElem, title = '',k) => {
         const blob = new Blob([new Uint8Array(arrayBuffer)], { type: "image/jpeg" });
-        url = window.URL.createObjectURL(blob)
-        imgElement.src = url
+        // url = window.URL.createObjectURL(blob)
+        k == "final"? readerFinal.readAsDataURL(blob): readerSummed.readAsDataURL(blob); 
         titleElem.innerHTML = title
         // window.URL.revokeObjectURL(url)
     }
