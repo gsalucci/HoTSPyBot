@@ -8,6 +8,9 @@ import threading
 import eventlet
 from time import sleep
 import sys
+import os
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 static_files = {
     "/": {'filename': 'index.html', 'content_type': 'text/html'},
 }
@@ -18,7 +21,7 @@ async def index(request):
         return web.Response(text=f.read(), content_type='text/html')
 
 # mgr = socketio.AsyncAioPikaManager('amqp://guest:guest@localhost:5672',channel='socketio')
-mgr = socketio.AsyncRedisManager('redis://localhost:6379')
+mgr = socketio.AsyncRedisManager(os.getenv("REDIS"))
 sio = socketio.AsyncServer(client_manager=mgr)
 app = web.Application()
 sio.attach(app)
