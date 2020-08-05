@@ -127,11 +127,11 @@
         'summed': { img: document.getElementById('summedImgDisp'), title: document.getElementById('summedImgTitle')}
     }
     readerFinal.onloadend = () => {
-            const base64data = reader.result;                
+            const base64data = readerFinal.result;                
             imageEls.final.img.src = base64data
     }
     readerSummed.onloadend = () => {
-            const base64data = reader.result;                
+            const base64data = readerSummed.result;                
             imageEls.summed.img.src = base64data
     }
 
