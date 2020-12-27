@@ -25,7 +25,20 @@ It uses 2 types of matching, color matching and tempalte matching to determine t
 
 The short-term goal is to make it gather enough data to feed to the ML algorithm.
 
-websocket and webapp server needs a rabbitmq instance running on localhost:5672. you can checkout app state updating in real-time at http://localhost:3000
+You can checkout app state updating in real-time at http://localhost:3000
+websocket and webapp server needs a redis instance running you can configure the connection string to the redis instanbce by
+creating a .env file, inside it enter:
+
+REDIS=redis://default:password@host:port
+
+password is optional, depends on redis server configuration.
+
+To run the bot, the first time, you will need to: 
+
+cd Utils
+python templateFIleBuilder.py
+
+this will create the templates.pickle file needed to template match stuff.
 
 Data that remains to be acquired:
 1. enemy and allied heroes position in the hero's FoV

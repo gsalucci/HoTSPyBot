@@ -130,8 +130,8 @@
                 "template": ""
             }
         },
-        "rejoin":{
-            "btnOneTL":{
+        "rejoin": {
+            "btnOneTL": {
                 "box": {
                     "top": 598,
                     "left": 762,
@@ -140,7 +140,7 @@
                 },
                 "template": ""
             },
-            "btnOneBR":{
+            "btnOneBR": {
                 "box": {
                     "top": 630,
                     "left": 940,
@@ -149,7 +149,7 @@
                 },
                 "template": ""
             },
-            "btnTwoTL":{
+            "btnTwoTL": {
                 "box": {
                     "top": 598,
                     "left": 960,
@@ -158,7 +158,7 @@
                 },
                 "template": ""
             },
-            "btnTwoBR":{
+            "btnTwoBR": {
                 "box": {
                     "top": 630,
                     "left": 1137,
@@ -188,36 +188,36 @@
                 "template": ""
             }
         },
-        "home":{
-            "ico":{
-               "box": {
+        "home": {
+            "ico": {
+                "box": {
                     "top": 183,
                     "left": 1835,
                     "width": 15,
                     "height": 20
                 },
-                "template": "" 
+                "template": ""
             }
         },
         "mvp": {
-            "arrowB":{
+            "arrowB": {
                 "box": {
-                     "top": 840,
-                     "left": 925,
-                     "width": 70,
-                     "height": 60
-                 },
-                 "template": "" 
-             },
-             "arrowR":{
+                    "top": 840,
+                    "left": 925,
+                    "width": 70,
+                    "height": 60
+                },
+                "template": ""
+            },
+            "arrowR": {
                 "box": {
-                     "top": 840,
-                     "left": 925,
-                     "width": 70,
-                     "height": 60
-                 },
-                 "template": "" 
-             }
+                    "top": 840,
+                    "left": 925,
+                    "width": 70,
+                    "height": 60
+                },
+                "template": ""
+            }
         },
         "loading": {
             "left": {
@@ -232,7 +232,11 @@
                 "width": 210,
                 "height": 40
             },
-            "color": [105,248,175]
+            "color": [
+                105,
+                248,
+                175
+            ]
         },
         "inGame": {
             "exa": {
@@ -309,24 +313,43 @@
             }
         }
     },
-    "inGameResources":{
-        "hpBar":{
-            "box":{
-                "top":1008,
-                "left":210,
-                "width":192,
-                "height":2
+    "inGameResources": {
+        "hpBar": {
+            "box": {
+                "top": 1008,
+                "left": 210,
+                "width": 192,
+                "height": 2
             },
-            "maskVerts":[
-                [206,1011],
-                [216,992],
-                [414,992],
-                [404,1011]
+            "maskVerts": [
+                [
+                    206,
+                    1011
+                ],
+                [
+                    216,
+                    992
+                ],
+                [
+                    414,
+                    992
+                ],
+                [
+                    404,
+                    1011
+                ]
             ],
-            "hpColor":[ 21 ,196 ,62 ],
-            "shieldColor":[236,243,240]
+            "hpColor": [
+                21,
+                196,
+                62
+            ],
+            "shieldColor": [
+                236,
+                243,
+                240
+            ]
         },
-
         "map": {
             "box": {
                 "top": 700,
@@ -335,16 +358,76 @@
                 "height": 329
             },
             "colors": {
-                "blueLower": [150,80,20],
-                "blueUpper": [255,140,60],
-                "redLower": [20,0,128],
-                "redUpper":[128,8,255],
-                "greenLower":[0,90,0],
-                "greenUpper":[40,255,90],
-                "violetLower":[0,10,0],
-                "violetUpper":[255,40,255],
-                "yellowLower":[0,150,150],
-                "yellowUpper":[128,255,255]
+                "blueLower": [
+                    150,
+                    80,
+                    20
+                ],
+                "blueUpper": [
+                    255,
+                    140,
+                    60
+                ],
+                "redLower": [
+                    20,
+                    0,
+                    128
+                ],
+                "redUpper": [
+                    128,
+                    8,
+                    255
+                ],
+                "greenLower": [
+                    0,
+                    90,
+                    0
+                ],
+                "greenUpper": [
+                    40,
+                    255,
+                    90
+                ],
+                "violetLower": [
+                    0,
+                    10,
+                    0
+                ],
+                "violetUpper": [
+                    255,
+                    40,
+                    255
+                ],
+                "yellowLower": [
+                    0,
+                    150,
+                    150
+                ],
+                "yellowUpper": [
+                    128,
+                    255,
+                    255
+                ]
+            }
+        },
+        "ui": {
+            "level": {
+                "left": {
+                    "box": {
+                        "top": 24,
+                        "left": 852,
+                        "width": 88,
+                        "height": 41
+                    }
+                },
+                "right": {
+                    "box": {
+                        "top": 24,
+                        "left": 990,
+                        "width": 88,
+                        "height": 41
+                    }
+                }
             }
         }
     }

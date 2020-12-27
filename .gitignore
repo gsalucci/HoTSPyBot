@@ -9,7 +9,7 @@ pyvenv.cfg
 templates.pickle
 # C extensions
 *.so
-
+history.txt
 # Distribution / packaging
 .Python
 build/

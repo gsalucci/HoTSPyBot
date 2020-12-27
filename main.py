@@ -6,9 +6,11 @@ from aiohttp import web
 import socketio
 import threading
 import eventlet
-from time import sleep
+import time
 import sys
 import os
+import json
+import traceback
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 static_files = {
@@ -51,8 +53,8 @@ def serve_app():
     asyncio.set_event_loop(event_loop_a)
     try:
         web.run_app(app,host="0.0.0.0",port=3000)
-    except expression as identifier:
-        print(f"WEBSOCKET EXCEPTION: {identifier}")
+    except Exception:
+        print(f"WEBSOCKET EXCEPTION")
     
 
 async def main():
@@ -71,17 +73,26 @@ async def main():
         if k != "KeyboardListener":
             procManager.procList[k].start()
 
+    async def updateUI():
+        message = {"state":procManager.sharedObjectsInstances['state'].getState(),"side":procManager.sharedObjectsInstances['state'].getSide(),"gameState":procManager.sharedObjectsInstances['gameState'].getGameState(),"images":procManager.sharedObjectsInstances['gameState'].getMapImages(),"log":procManager.sharedObjectsInstances['log'].getLastMessage()}
+        try:
+            await mgr.emit('state', message)
+            # print(f"{message}")
+            with open('history.txt', 'a') as history:
+                history.write(json.dumps(message)+'\n')
+        except Exception:
+            print("UpdateUI exception:")
+            traceback.print_exc()
+
+    lastTime = time.time()
     while not procManager.sharedObjectsInstances["keyboard"].getAction() == "Stop":
         stopwatch.start()
-        try:
-            await mgr.emit('state', {"state":procManager.sharedObjectsInstances['state'].getState(),"side":procManager.sharedObjectsInstances['state'].getSide(),"gameState":procManager.sharedObjectsInstances['gameState'].getGameState(),"images":procManager.sharedObjectsInstances['gameState'].getMapImages(),"log":procManager.sharedObjectsInstances['log'].getLastMessage()})
-        except expression as identifier:
-            print("exception occurred")
-        # sio.emit('side', procManager.sharedObjectsInstances['state'].getSide())
-        # sio.emit('gameState', procManager.sharedObjectsInstances['gameState'].getGameStateValue('hp'))
-        # sleep(0.01)
-        # log(f"[ Main ] {stopwatch.stop()}\t {procManager.sharedObjectsInstances['state'].getState()}\t{procManager.sharedObjectsInstances['state'].getSide()}\t{procManager.sharedObjectsInstances['gameState'].getGameStateValue('hp')}")
-    
+        if (time.time() - lastTime) >= 0.1:
+            lastTime = time.time()
+            await updateUI()
+        stopwatch.stop()
+
+    updateUIThread.stop()
     procManager.stopAll()
     stillRunning = True
     while stillRunning:

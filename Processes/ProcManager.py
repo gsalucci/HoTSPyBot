@@ -7,6 +7,7 @@ from Utils.SharedObjects.State import State
 from Processes.HeathBarScanner import HealthBarScanner
 from Processes.KeyboardListener import KeyboardListener
 from Processes.MapScanner import MapScanner
+from Processes.UIScanner import UIScanner
 from Processes.StateFinder import StateFinder
 from Processes.SocketServer import SocketServer
 class ProcManager():
@@ -39,6 +40,7 @@ class ProcManager():
             'HealthBarScanner':     HealthBarScanner(self.sharedObjectsInstances["gameState"],self.sharedObjectsInstances["log"],self.settings["inGameResources"]["hpBar"],self.sharedObjectsInstances["state"]),
             'KeyboardListener':     KeyboardListener(self.sharedObjectsInstances["keyboard"], self.sharedObjectsInstances["log"]),
             'MapScanner':           MapScanner(self.sharedObjectsInstances["gameState"],self.sharedObjectsInstances["log"],self.settings["inGameResources"]["map"],self.sharedObjectsInstances["state"]),
+            'UIScanner':            UIScanner(self.sharedObjectsInstances["gameState"],self.sharedObjectsInstances["log"],self.sharedObjectsInstances["state"],self.settings["inGameResources"]["ui"]),
             'StateFinder':          StateFinder(self.sharedObjectsInstances["state"],self.sharedObjectsInstances["log"],self.settings["stateFindingResources"]),
             # 'SocketServer':         SocketServer(self.sharedObjectsInstances["serverObject"],self.sharedObjectsInstances["log"])
         }

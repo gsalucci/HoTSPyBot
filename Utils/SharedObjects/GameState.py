@@ -1,3 +1,5 @@
+import cv2
+import base64
 class GameState():
     def __init__(self):
         self.gameState = {}
@@ -9,7 +11,7 @@ class GameState():
         if k in self.gameState.keys():
             return self.gameState[k]
         else:
-            return ""
+            return None
     def setGameStateKeyValue(self,k,v):
         self.gameState[k] = v
     def setProcStatus(self,p):
@@ -17,7 +19,8 @@ class GameState():
     def getProcRunning(self):
         return self.procRunning
     def setMapImage(self, k, i):
-        self.mapImages[k] = i 
+        self.mapImages[k] = "data:image/jpg;base64,"+base64.b64encode(cv2.imencode('.jpg',i)[1]).decode()
+
     def getMapImage(self, k):
         return self.mapImages[k]
     def getMapImages(self):
