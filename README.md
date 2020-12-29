@@ -14,6 +14,7 @@ The goal for this bot is to play and win games VS AI with the help of machine le
   * after-game screen (leave screen)
 Once in game it can track:
 * Own hero HP
+* Teams levels
 * Map:
   * own structures
   * enemy structures
@@ -25,25 +26,38 @@ It uses 2 types of matching, color matching and tempalte matching to determine t
 
 The short-term goal is to make it gather enough data to feed to the ML algorithm.
 
+
+## How to run the bot
+
+### Requirements
+
+1. [tesseract-ocr](https://github.com/tesseract-ocr/tesseract)
+2. [redis](https://redis.io/) server
+
+### Setup
+1. clone the repo: `git clone https://github.com/mozempk/HoTSPyBot.git`
+2. cd into the repo folder: `cd /path/to/repo/HoTSPyBot`
+3. create a python3 virtual environment: `python -m venv /path/to/repo/HoTSPyBot/.venv`
+4. activate the virtual environment, you will need to run the proper `activate` script for your OS. plese refer to [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#activating-a-virtual-environment)
+5. install tesseract-ocr, refer to [this guide](https://github.com/tesseract-ocr/tesseract)
+6. install python dependencies: `pip install -r requirements.txt`
+7. generate the template files: 
+
+```shell
+  cd /path/to/repo/HoTSPyBot/Utils
+  python ./templateFileBuilder.py
+```
+8. create a `.env` file in the root of the repo
+9. inside it place the redis connection string, eg: `REDIS=redis://default:password@host:port`
+10. run the main script: `python main.py`
+
 You can checkout app state updating in real-time at http://localhost:3000
-websocket and webapp server needs a redis instance running you can configure the connection string to the redis instanbce by
-creating a .env file, inside it enter:
 
-REDIS=redis://default:password@host:port
-
-password is optional, depends on redis server configuration.
-
-To run the bot, the first time, you will need to: 
-
-cd Utils
-python templateFIleBuilder.py
-
-this will create the templates.pickle file needed to template match stuff.
 
 Data that remains to be acquired:
 1. enemy and allied heroes position in the hero's FoV
 2. track enemy and friendly minions in the hero FoV
-3. Teams' level (OCR)
+3. ~~Teams' level (OCR)~~
 4. Own cooldowns (OCR)
 5. determine What own spells do (it needs to be as generic as possible) ?
 
