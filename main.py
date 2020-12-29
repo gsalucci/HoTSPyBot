@@ -12,6 +12,8 @@ import os
 import json
 import traceback
 from dotenv import load_dotenv, find_dotenv
+from enum import Enum
+
 load_dotenv(find_dotenv())
 static_files = {
     "/": {'filename': 'index.html', 'content_type': 'text/html'},
@@ -22,49 +24,56 @@ async def index(request):
     with open('index.html') as f:
         return web.Response(text=f.read(), content_type='text/html')
 
-# mgr = socketio.AsyncAioPikaManager('amqp://guest:guest@localhost:5672',channel='socketio')
 mgr = socketio.AsyncRedisManager(os.getenv("REDIS"))
 sio = socketio.AsyncServer(client_manager=mgr)
 app = web.Application()
 sio.attach(app)
-app.router.add_static('/www', 'www')
 app.router.add_get('/', index)
-event_loop_a = asyncio.new_event_loop()
+httpServerEventLoop = asyncio.new_event_loop()
 ver = 0.1
+UIUpdateInterval = 0.1
 settings = None
-wst = None
+wst = None #WebSocketThread
 
-@sio.event
-def connect(sid, environ):
-    print("connect ", sid)
-    # main()
+class SocketMessageTypes(Enum):
+    CONNECTED = "Connected"
+    DISCONNECTED = "Disconnected"
+    CONTROL = "Control"
 
-# @sio.event
-# async def chat_message(sid, data):
-#     print("message ", data)
-#     await sio.emit('reply', room=sid)
+class SocketMessageHandler():
+    def __init__(self, settings, manager):
+        self.settings = settings
+        self.manager = manager
+        self.name = 'SocketMessageHandler'
 
-@sio.event
-def disconnect(sid):
-    print('disconnect ', sid)
-
+    def log(self,message):
+        self._log = self.manager.sharedObjectsInstances["log"].log
+        self._log(f"[ {self.name} ] {message}")
+    
+    def handleMessage(self,message):
+        self.log(f"Received message: ( {message['type']} ) {message['message']} {message['data']}")
+        if message["type"] == SocketMessageTypes.CONTROL.name:
+            if message["message"] == "updateUIRate":
+                global UIUpdateInterval
+                UIUpdateInterval = message["data"]
 
 def serve_app():
-    asyncio.set_event_loop(event_loop_a)
+    asyncio.set_event_loop(httpServerEventLoop)
     try:
         web.run_app(app,host="0.0.0.0",port=3000)
     except Exception:
-        print(f"WEBSOCKET EXCEPTION")
-    
+        print(f"HTTP Server EXCEPTION")
+        traceback.print_exc()
 
 async def main():
-    print(f"Welcome to HoTSPyBot {ver}")
     settings = settingsManager.init()
     procManager = ProcManager(settings)
+    global socketMessageHandler
+    socketMessageHandler= SocketMessageHandler(settings,procManager)
     log = procManager.sharedObjectsInstances["log"].log
-    log("[ Main ] Enter the lobby and press F5 to start the bot, F6 to stop it!")
-
+    log(f"[ Main ] Welcome to HoTSPyBot {ver}")
     procManager.start("KeyboardListener")
+    log("[ Main ] Enter the lobby and press F5 to start the bot, F6 to stop it!")
 
     while not procManager.sharedObjectsInstances["keyboard"].getAction() == "Start":
         pass
@@ -87,7 +96,7 @@ async def main():
     lastTime = time.time()
     while not procManager.sharedObjectsInstances["keyboard"].getAction() == "Stop":
         stopwatch.start()
-        if (time.time() - lastTime) >= 0.1:
+        if (time.time() - lastTime) >= UIUpdateInterval:
             lastTime = time.time()
             await updateUI()
         stopwatch.stop()
@@ -104,6 +113,35 @@ async def main():
     await app.shutdown()
     sys.exit(0)
     exit(0)
+
+@sio.event
+def connect(sid, environ):
+    try:
+        # socketMessageHandler.log(f"connected: {sid}")
+        socketMessageHandler.handleMessage({"type":SocketMessageTypes.CONNECTED.name, "message":"Client connected", "data":sid})
+    except NameError:
+        pass
+
+@sio.event
+def disconnect(sid):
+    try:
+        socketMessageHandler.handleMessage({"type":SocketMessageTypes.DISCONNECTED.name, "message":"Client disconnected", "data":sid})
+    except NameError:
+        pass
+
+@sio.event
+def changeUIUpdateRate(sid, data):
+    try:
+        socketMessageHandler.handleMessage({"type":SocketMessageTypes.CONTROL.name, "message":"updateUIRate", "data":data})
+    except NameError:
+        pass
+
+# @sio.event
+# async def chat_message(sid, data):
+#     print("message ", data)
+#     await sio.emit('reply', room=sid)
+
+
 if __name__ == '__main__':
     # web.run_app(app, host="0.0.0.0",port=3000)
     wst = threading.Thread(target=serve_app)
