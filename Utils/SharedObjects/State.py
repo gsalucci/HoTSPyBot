@@ -4,7 +4,7 @@ class State():
         self.state = "undefined"
         self.side = "undefined"
         self.speed = 0
-        self.maxSize = 13
+        self.maxSize = 20
         self.stateQ = queue.Queue(maxsize = self.maxSize)
 
         self.speedCount = 0

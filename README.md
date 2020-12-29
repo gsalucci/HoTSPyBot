@@ -31,15 +31,16 @@ The short-term goal is to make it gather enough data to feed to the ML algorithm
 
 ### Requirements
 
-1. [tesseract-ocr](https://github.com/tesseract-ocr/tesseract)
-2. [redis](https://redis.io/) server
+1. python 3.9.x
+2. [tesseract-ocr](https://github.com/tesseract-ocr/tesseract)
+3. [redis](https://redis.io/) server
 
 ### Setup
 1. clone the repo: `git clone https://github.com/mozempk/HoTSPyBot.git`
-2. cd into the repo folder: `cd /path/to/repo/HoTSPyBot`
-3. create a python3 virtual environment: `python -m venv /path/to/repo/HoTSPyBot/.venv`
+2. cd into the repo folder: `cd /path/to/HoTSPyBot`
+3. create a python 3 virtual environment: `python -m venv /path/to/repo/HoTSPyBot/.venv`
 4. activate the virtual environment, you will need to run the proper `activate` script for your OS. plese refer to [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#activating-a-virtual-environment)
-5. install tesseract-ocr, refer to [this guide](https://github.com/tesseract-ocr/tesseract)
+5. if you haven't already, install tesseract-ocr, refer to [this guide](https://github.com/tesseract-ocr/tesseract)
 6. install python dependencies: `pip install -r requirements.txt`
 7. generate the template files: 
 
